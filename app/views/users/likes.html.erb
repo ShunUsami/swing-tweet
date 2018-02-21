@@ -1,0 +1,72 @@
+
+<div class="main user-show">
+
+<div class="container">
+
+<div class="box-badge">
+称号<br>
+<% if @user.user_exp<10 then %>
+<font size=2>★小僧</font><br>
+<% elsif @user.user_exp<20 then %>
+<font size=2>★小学３年</font><br>
+<% elsif @user.user_exp<30 then %>
+<font size=2>★中学生</font><br>
+<% elsif @user.user_exp<40 then %>
+<font size=2>★受験生</font><br>
+<% else %>
+<font size=2>★王様</font><br>
+<% end %>
+</div>
+
+
+<div class="box-avatar">
+<br>
+<% if @user.user_exp<10 then %>
+<img src="<%= "/avatar_images/avatar.png" %>", height=110px>
+<% elsif @user.user_exp<20 then %>
+<img src="<%= "/avatar_images/avatar2.png" %>", height=110px>
+<% elsif @user.user_exp<30 then %>
+<img src="<%= "/avatar_images/avatar3.png" %>", height=110px>
+<% elsif @user.user_exp<40 then %>
+<img src="<%= "/avatar_images/avatar4.png" %>", height=110px>
+<% else %>
+<img src="<%= "/avatar_images/avatar5.png" %>", height=110px>
+<% end %>
+
+</div>
+
+
+<h2><%= @user.name %></h2>
+<div class="user">
+<img src="<%= "/user_images/#{@user.image_name}" %>">
+<h2>Lv.<%= @user.user_exp %></h2>
+<h2>Total likes : <%= @likes_count %></h2>
+<h2>Total login : <%= @user_login %>回</h2>
+<% if @user.id == @current_user.id %>
+<%= link_to("編集", "/users/#{@user.id}/edit") %>
+<% end %>
+</div>
+
+<ul class="user-tabs">
+<li><%= link_to("Posts", "/users/#{@user.id}") %></li>
+<li class="active"><%= link_to("Likes", "/users/#{@user.id}/likes") %></li>
+</ul>
+
+<% @likes.each do |like| %>
+<% post = Post.find_by(id: like.post_id) %>
+
+<div class="posts-index-item">
+<div class="post-left">
+<img src="<%= "/user_images/#{post.user.image_name}" %>">
+</div>
+<div class="post-right">
+<div class="post-user-name">
+<%= link_to(post.user.name, "/users/#{post.user.id}") %>
+</div>
+<%= link_to(post.content, "/posts/#{post.id}") %>
+</div>
+</div>
+
+<% end %>
+</div>
+</div>

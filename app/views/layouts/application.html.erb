@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TweetApp</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+<header>
+<div class="header-logo">
+<% if @current_user %>
+<%= link_to("Private Class Network", "/posts/index") %>
+<% else %>
+<%= link_to("Private Class Network", "/") %>
+<% end %>
+</div>
+<ul class="header-menus">
+
+<% if @current_user %>
+<li>
+<%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+</li>
+<li>
+<%= link_to("Timeline", "/posts/index") %>
+</li>
+<li>
+<%= link_to("Post", "/posts/new") %>
+</li>
+<li>
+<%= link_to("Ranking", "/users/index") %>
+</li>
+<li>
+<%= link_to("Logout", "/logout", {method: :post}) %>
+</li>
+
+<% else %>
+<li>
+<%= link_to("Sign up", "/signup") %>
+</li>
+<li>
+<%= link_to("Login", "/login") %>
+</li>
+<% end %>
+</ul>
+</header>
+
+<% if flash[:notice] %>
+<div class="flash">
+<%= flash[:notice] %>
+</div>
+<% end %>
+
+<%= yield %>
+</body>
+</html>
